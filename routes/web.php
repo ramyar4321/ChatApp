@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@welcome')->name('welcome');
+
+Route::get('messages', 'MessagesController@index')->name('messages.index');
+Route::post('messages', 'MessagesController@store')->name('messages.store');
