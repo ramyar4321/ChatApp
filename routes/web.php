@@ -1,7 +1,8 @@
 <?php
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MessagesController;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +15,17 @@ use App\Http\Controllers\MessagesController;
 |
 */
 
-Route::get('/', 'HomeController@store')->name('home.store');
+Route::get('/', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
 
-Route::resource('messages', MessagesController::class)->only([
-    'index', 'store'
-]);
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+require __DIR__.'/auth.php';
