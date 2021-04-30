@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Messages;
+use App\Http\Resources\MessagesResource;
 
 class MessagesController extends Controller
 {
@@ -14,13 +15,12 @@ class MessagesController extends Controller
      */
     public function index()
     {
-        $messages = Messages::all();
-        $res = response()->json($messages); 
+        // Eager load Messages with User to alleviate N+1 problem.
+        $messages = Messages->with('user')->get();
 
-        echo $messages;
-        echo $res;
-
-        return $res;
+        // Return messgaes resource.
+        $resource = new MessagesResource($messages);
+        return $resource;
     }
 
     /**

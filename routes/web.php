@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MessagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomeController@welcome')->name('welcome');
+Route::get('/', 'HomeController@store')->name('home.store');
 
-Route::get('messages', 'MessagesController@index')->name('messages.index');
-Route::post('messages', 'MessagesController@store')->name('messages.store');
+Route::resource('messages', MessagesController::class)->only([
+    'index', 'store'
+]);
