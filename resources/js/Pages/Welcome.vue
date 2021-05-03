@@ -50,6 +50,7 @@
 }
 
 .message{
+    color: grey;
 }
 
 .routes{
@@ -57,7 +58,6 @@
 }
 
 .login{
-    /* padding: 10px 20px; */
     width: 80px;
     height: 50px;
     margin-right: 30px;
@@ -66,7 +66,6 @@
 }
 
 .register{
-    /* padding: 10px 20px; */
     width: 80px;
     height: 50px;
     margin-left: 30px;

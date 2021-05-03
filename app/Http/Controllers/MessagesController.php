@@ -11,16 +11,26 @@ class MessagesController extends Controller
     /**
      * Fetch all messages resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        // Eager load Messages with User to alleviate N+1 problem.
-        $messages = Messages->with('user')->get();
+        // // Eager load Messages with User to alleviate N+1 problem.
+        // $messages = Messages->with('user')
+        //                     ->orderBy('created_at', 'DESC')
+        //                     ->get();
+        
+        // echo $messages;
+        // echo gettype($messages);
 
-        // Return messgaes resource.
-        $resource = new MessagesResource($messages);
-        return $resource;
+        // // Return messages Vue resource.
+        // return Inertia::render('Chatboard', [
+        //     'messages' => $messages,
+        // ]);
+        echo 'index ran';
+        return "Hello world";
+        //$resource = new MessagesResource($messages);
+        //return $resource;
     }
 
     /**
@@ -37,16 +47,14 @@ class MessagesController extends Controller
      * Persist message resource to database.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return App\Http\Resources\MessagesResource
      */
     public function store(Request $request)
     {
-        $newMessage = Messages::create($request->input('message'));
-        $res = response()->json('Message Added');
+        $newMessage = Messages::create($request->message);
 
-        echo $newMessage;
-
-        return $res;
+        $resource = new MessagesResource($newMessage);
+        return $resource;
     }
 
     /**
