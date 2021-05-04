@@ -31,13 +31,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/messages', [MessagesController::class, 'index'])->middleware('auth')->name('messages.index');
-// Route::get('/messages', function () {
-//     $messages = Messages::with('user')
-//                             ->orderBy('created_at', 'DESC')
-//                             ->get();
-
-//     return Inertia::render('Chatboard');
-// })->middleware('auth')->name('messages.index');
 Route::post('/messages', [MessagesController::class, 'store'])->name('messages.store');
 
 require __DIR__.'/auth.php';

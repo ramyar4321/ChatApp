@@ -20,21 +20,11 @@ class MessagesController extends Controller
         $messages = Messages::with('user')
                             ->orderBy('created_at', 'DESC')
                             ->get();
-        
-        //echo $messages;
-        //echo gettype($messages);
-        //echo 'Hello World';
-        //echo("<script>console.log('PHP4  ');</script>");
 
         // Return messages Vue resource.
-        // return Inertia::render('Chatboard', [
-        //     'messages' => $messages,
-        // ]);
-        return Inertia::render('Chatboard');
-        //return view('Chatboard');
-        //return 'Hello World';
-        //$resource = new MessagesResource($messages);
-        //return $resource;
+        return Inertia::render('Chatboard', [
+            'messages' => $messages,
+        ]);
     }
 
     /**
