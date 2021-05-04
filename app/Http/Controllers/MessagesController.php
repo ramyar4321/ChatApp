@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Messages;
 use App\Http\Resources\MessagesResource;
+use Inertia\Inertia;
 
 class MessagesController extends Controller
 {
@@ -15,20 +16,23 @@ class MessagesController extends Controller
      */
     public function index()
     {
-        // // Eager load Messages with User to alleviate N+1 problem.
-        // $messages = Messages->with('user')
-        //                     ->orderBy('created_at', 'DESC')
-        //                     ->get();
+        // Eager load Messages with User to alleviate N+1 problem.
+        $messages = Messages::with('user')
+                            ->orderBy('created_at', 'DESC')
+                            ->get();
         
-        // echo $messages;
-        // echo gettype($messages);
+        //echo $messages;
+        //echo gettype($messages);
+        //echo 'Hello World';
+        //echo("<script>console.log('PHP4  ');</script>");
 
-        // // Return messages Vue resource.
+        // Return messages Vue resource.
         // return Inertia::render('Chatboard', [
         //     'messages' => $messages,
         // ]);
-        echo 'index ran';
-        return "Hello world";
+        return Inertia::render('Chatboard');
+        //return view('Chatboard');
+        //return 'Hello World';
         //$resource = new MessagesResource($messages);
         //return $resource;
     }

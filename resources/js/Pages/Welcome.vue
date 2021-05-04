@@ -13,6 +13,7 @@
         <inertia-link v-if="canRegister" :href="route('register')" as="button" type="button" class="register">
           Register
         </inertia-link>
+        
       </div>
     </div>
   </div>

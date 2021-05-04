@@ -2,8 +2,9 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Models\Messages;
 use App\Http\Controllers\MessagesController;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,14 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/messages', [MessagesController::class, 'index'])->name('messages.index');
+Route::get('/messages', [MessagesController::class, 'index'])->middleware('auth')->name('messages.index');
+// Route::get('/messages', function () {
+//     $messages = Messages::with('user')
+//                             ->orderBy('created_at', 'DESC')
+//                             ->get();
+
+//     return Inertia::render('Chatboard');
+// })->middleware('auth')->name('messages.index');
 Route::post('/messages', [MessagesController::class, 'store'])->name('messages.store');
 
 require __DIR__.'/auth.php';

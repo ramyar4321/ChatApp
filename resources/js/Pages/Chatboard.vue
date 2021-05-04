@@ -1,26 +1,18 @@
-<template>
-    <chat-message :messages="messages"></chat-message>
-    <chat-form></chat-form>   
-</template>
+<template>Hello World</template>
 
 <script>
-import Chatmessage from '@/Components/Chatmessage';
-import Chatform from '@/Components/Chatform';
-
-export default({
-    components: {
-        Chatform,
-        Chatmessages,
-    },
-    props: {
-    messages: Object,
+export default {
+  props: {
     auth: Object,
     errors: Object,
   },
-})
+
+  mounted: function () {
+    console.log("Mounted!");
+  },
+};
 </script>
 
 
 <style scoped>
-
 </style>
