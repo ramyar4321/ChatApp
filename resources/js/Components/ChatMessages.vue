@@ -1,7 +1,7 @@
 <template>
   <div class="chatbox">
     <ul class="chatlist">
-      <li v-for="message in messages" :key="message.id">
+      <li v-for="message in messages">
         <div class="chat-message">
           <div class="chat-details">
             {{message.user.name}}  {{message.created_at}}
@@ -18,6 +18,9 @@
 <script>
 export default {
   props: {
+    /**
+      * The message object to be displayed.
+    */
     messages: Object,
   },
 };
