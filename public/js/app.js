@@ -17587,27 +17587,13 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    //console.log(this.messages);
-    console.log('mounted');
     window.Echo["private"]("chat").listen(".message.sent", function (e) {
       // Add new message to prop and trigger a re-render of component
       // thus displaying new message.
-      console.log(e.message);
-      console.log(e.user); //console.log(this.messages);
-      // this.messages.push({
-      //   //message: e.message.message,
-      //   message: e.message,
-      //   user: e.user,
-      // });
-
       var message = e.message;
       message.user = e.user;
 
-      _this.messages.push( //message: e.message.message,
-      message);
-
-      console.log(message);
-      console.log(_this.messages);
+      _this.messages.push(message);
     });
   },
 
@@ -17616,8 +17602,8 @@ __webpack_require__.r(__webpack_exports__);
    * leave Chat private channel and stop listening for new messages from other users.
    */
   unmounted: function unmounted() {
-    console.log('unmounted');
-    Echo.leave("chat");
+    console.log("unmounted");
+    window.Echo.leave("chat");
   }
 });
 

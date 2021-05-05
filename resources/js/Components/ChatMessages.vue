@@ -4,7 +4,7 @@
       <li v-for="message in messages" :key="message.id">
         <div class="chat-message">
           <div class="chat-details">
-            {{ message.user.name }} {{ message.created_at }}
+            {{ message.user.name }} {{  message.created_at }}
           </div>
           <div class="chat-text">
             {{ message.message }}
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     /**
@@ -29,16 +30,12 @@ export default {
    * and update component with new message.
    */
   mounted() {
-    //console.log(this.messages);
-    console.log('mounted');
     window.Echo.private("chat").listen(".message.sent", (e) => {
       // Add new message to prop and trigger a re-render of component
       // thus displaying new message.
       let message = e.message;
       message.user = e.user;
-      this.messages.push(
-         message
-      );
+      this.messages.push(message);
     });
   },
 
@@ -47,8 +44,8 @@ export default {
    * leave Chat private channel and stop listening for new messages from other users.
    */
   unmounted() {
-    console.log('unmounted');
-    Echo.leave("chat");
+    console.log("unmounted");
+    window.Echo.leave("chat");
   },
 };
 </script>
