@@ -1,11 +1,20 @@
 <template>
-  <div class="chat-container">
-    <chat-messages :messages="messages"></chat-messages>
-    <chat-form></chat-form>
-  </div>
+  <breeze-authenticated-layout>
+    <template #header>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        Chatboard
+      </h2>
+    </template>
+
+    <div class="chat-container">
+      <chat-messages :messages="messages"></chat-messages>
+      <chat-form></chat-form>
+    </div>
+  </breeze-authenticated-layout>
 </template>
 
 <script>
+import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
 import ChatMessages from "@/Components/ChatMessages.vue";
 import ChatForm from "@/Components/ChatForm.vue";
 
@@ -16,6 +25,7 @@ export default {
   components: {
     ChatMessages,
     ChatForm,
+    BreezeAuthenticatedLayout,
   },
 
   props: {

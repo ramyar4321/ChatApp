@@ -44,7 +44,6 @@ export default {
    * leave Chat private channel and stop listening for new messages from other users.
    */
   unmounted() {
-    console.log("unmounted");
     window.Echo.leave("chat");
   },
 };
