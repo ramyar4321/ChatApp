@@ -1,39 +1,40 @@
 <template>
   <form @submit.prevent="submit">
-    <input input type="text" name="message"  class="send-message-input" placeholder="Type a message" v-model="newMessage" @keyup.enter="sendMessage" />
-    <button type="submit" @click="sendMessage">Submit</button>
+    <input
+      input
+      type="text"
+      name="message"
+      class="send-message-input"
+      placeholder="Type a message"
+      v-model="form.newMessage"
+      @keyup.enter="saveMessage"
+    />
+    <button type="submit" @click="saveMessage">Submit</button>
   </form>
 </template>
 
 <script>
 export default {
-    data(){
+  data() {
     return {
-      newMessage: '',
-    }
+      form: this.$inertia.form({
+        newMessage: "",
+      }),
+    };
   },
 
   methods: {
-
-      /**
-        * Trigger when a new message is sent via input field.
-        * Emit the new message to parent component Chatboard to be
-        * displayed in Chat.
-        * 
-      */
-      sendMessage () {
-          /**
-         * messagesent event.
-         *
-         * @event messagesent
-         * @type {String}
-         */
-          this.$emit('messagesent', this.newMessage);
-
-          // Reset message input field to empty string
-          this.newMessage = '';
-      }
-  }
+    /**
+     * Save message to database.
+     * Then reset message field to empty string.
+     *
+     */
+    saveMessage() {
+      this.$inertia.post("/messages", this.form, {
+        onFinish: () => this.form.reset("newMessage"),
+      })
+    },
+  },
 };
 </script>
 

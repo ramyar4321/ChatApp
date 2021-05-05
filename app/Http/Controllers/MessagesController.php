@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Messages;
 use App\Http\Resources\MessagesResource;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class MessagesController extends Controller
@@ -18,7 +20,7 @@ class MessagesController extends Controller
     {
         // Eager load Messages with User to alleviate N+1 problem.
         $messages = Messages::with('user')
-                            ->orderBy('created_at', 'DESC')
+                            ->orderBy('created_at')
                             ->get();
 
         // Return messages Vue resource.
@@ -45,10 +47,27 @@ class MessagesController extends Controller
      */
     public function store(Request $request)
     {
-        $newMessage = Messages::create($request->message);
+        //$user = Auth::user();
+        //$newMessage = Messages::create($request->message);
 
-        $resource = new MessagesResource($newMessage);
-        return $resource;
+        //echo "<script>console.log('Debug Objects: " . $user . "' );</script>";
+
+        //echo "<script>console.log('Debug Objects: " . $request->newMessage . "' );</script>";
+        //$newMessage = Messages::create($request->newMessage);
+
+        //return response()->json("Response");
+
+        // $resource = new MessagesResource($newMessage);
+        // return $resource;
+
+        $user = Auth::user();
+
+        $message = $user->messages()->create([
+            'message' => $request->newMessage
+          ]);
+
+          // Rerender Chat component to display newly added message
+          return Redirect::route('messages.index');
     }
 
     /**

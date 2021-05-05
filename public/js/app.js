@@ -17535,26 +17535,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      newMessage: ''
+      form: this.$inertia.form({
+        newMessage: ""
+      })
     };
   },
   methods: {
     /**
-      * Trigger when a new message is sent via input field.
-      * Emit the new message to parent component Chatboard to be
-      * displayed in Chat.
-      * 
-    */
-    sendMessage: function sendMessage() {
-      /**
-      * messagesent event.
-      *
-      * @event messagesent
-      * @type {String}
-      */
-      this.$emit('messagesent', this.newMessage); // Reset message input field to empty string
+     * Save message to database.
+     * Then reset message field to empty string.
+     *
+     */
+    saveMessage: function saveMessage() {
+      var _this = this;
 
-      this.newMessage = '';
+      this.$inertia.post("/messages", this.form, {
+        onFinish: function onFinish() {
+          return _this.form.reset("newMessage");
+        }
+      });
     }
   }
 });
@@ -18208,8 +18207,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
-  * This component will display the Chat.
-*/
+ * This component will display the Chat.
+ */
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -18218,39 +18217,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: {
     /**
-      * The message object to be displayed.
-    */
+     * The message object to be displayed.
+     */
     messages: Object,
 
     /**
-      * The current user.
-    */
+     * The current user.
+     */
     auth: Object,
 
     /**
-      * Errors from rendering. 
-    */
+     * Errors from rendering.
+     */
     errors: Object
-  },
-  data: function data() {
-    return {
-      chatMessages: this.messages
-    };
-  },
-  methods: {
-    /**
-      * Add new message from Chat Form.
-      * 
-      * @param {String} message New message to be added to the Chat 
-    */
-    addMessage: function addMessage(message) {
-      var newMessage = {
-        message: message,
-        user: this.auth.user,
-        created_at: ""
-      };
-      this.chatMessages.push(newMessage);
-    }
   }
 });
 
@@ -18387,17 +18366,17 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "class": "send-message-input",
     placeholder: "Type a message",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-      return $data.newMessage = $event;
+      return $data.form.newMessage = $event;
     }),
     onKeyup: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function () {
-      return $options.sendMessage && $options.sendMessage.apply($options, arguments);
+      return $options.saveMessage && $options.saveMessage.apply($options, arguments);
     }, ["enter"]))
   }, null, 544
   /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.newMessage]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.newMessage]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     type: "submit",
     onClick: _cache[3] || (_cache[3] = function () {
-      return $options.sendMessage && $options.sendMessage.apply($options, arguments);
+      return $options.saveMessage && $options.saveMessage.apply($options, arguments);
     })
   }, "Submit")], 32
   /* HYDRATE_EVENTS */
@@ -18444,13 +18423,15 @@ var _hoisted_5 = {
 
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.messages, function (message) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(message.user.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(message.created_at), 1
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
+      key: message.id
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(message.user.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(message.created_at), 1
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(message.message), 1
     /* TEXT */
     )])]);
-  }), 256
-  /* UNKEYED_FRAGMENT */
+  }), 128
+  /* KEYED_FRAGMENT */
   ))])]);
 });
 
@@ -19664,14 +19645,10 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   var _component_chat_form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("chat-form");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_chat_messages, {
-    messages: $data.chatMessages
+    messages: $props.messages
   }, null, 8
   /* PROPS */
-  , ["messages"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_chat_form, {
-    onMessagesent: $options.addMessage
-  }, null, 8
-  /* PROPS */
-  , ["onMessagesent"])]);
+  , ["messages"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_chat_form)]);
 });
 
 /***/ }),

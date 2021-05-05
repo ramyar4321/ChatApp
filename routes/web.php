@@ -31,6 +31,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/messages', [MessagesController::class, 'index'])->middleware('auth')->name('messages.index');
-Route::post('/messages', [MessagesController::class, 'store'])->name('messages.store');
+Route::post('/messages', [MessagesController::class, 'store'])->middleware('auth')->name('messages.store');
 
 require __DIR__.'/auth.php';

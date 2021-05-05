@@ -1,7 +1,7 @@
 <template>
   <div class="chatbox">
     <ul class="chatlist">
-      <li v-for="message in messages">
+      <li v-for="message in messages" :key="message.id">
         <div class="chat-message">
           <div class="chat-details">
             {{message.user.name}}  {{message.created_at}}
