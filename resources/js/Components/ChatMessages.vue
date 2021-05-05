@@ -4,10 +4,10 @@
       <li v-for="message in messages" :key="message.id">
         <div class="chat-message">
           <div class="chat-details">
-            {{message.user.name}}  {{message.created_at}}
+            {{ message.user.name }} {{ message.created_at }}
           </div>
           <div class="chat-text">
-            {{message.message}}
+            {{ message.message }}
           </div>
         </div>
       </li>
@@ -19,9 +19,36 @@
 export default {
   props: {
     /**
-      * The message object to be displayed.
-    */
+     * The message object to be displayed.
+     */
     messages: Object,
+  },
+  /**
+   * When Chat Messages component mounts,
+   * listen for new message from other users
+   * and update component with new message.
+   */
+  mounted() {
+    //console.log(this.messages);
+    console.log('mounted');
+    window.Echo.private("chat").listen(".message.sent", (e) => {
+      // Add new message to prop and trigger a re-render of component
+      // thus displaying new message.
+      let message = e.message;
+      message.user = e.user;
+      this.messages.push(
+         message
+      );
+    });
+  },
+
+  /**
+   * When Chat Messages component unmounts (such as when the user logs out),
+   * leave Chat private channel and stop listening for new messages from other users.
+   */
+  unmounted() {
+    console.log('unmounted');
+    Echo.leave("chat");
   },
 };
 </script>
@@ -52,10 +79,10 @@ export default {
   border-radius: 10px;
 }
 
-.chat-message{
-width: 50%;
-border: 1px solid #000;
-text-align: left;
-background-color: white;
+.chat-message {
+  width: 50%;
+  border: 1px solid #000;
+  text-align: left;
+  background-color: white;
 }
 </style>

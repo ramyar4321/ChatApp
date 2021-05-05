@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Messages;
 use App\Http\Resources\MessagesResource;
 use Illuminate\Support\Facades\Redirect;
+use App\Events\MessageSent;
 use Inertia\Inertia;
 
 class MessagesController extends Controller
@@ -47,27 +48,19 @@ class MessagesController extends Controller
      */
     public function store(Request $request)
     {
-        //$user = Auth::user();
-        //$newMessage = Messages::create($request->message);
-
-        //echo "<script>console.log('Debug Objects: " . $user . "' );</script>";
-
-        //echo "<script>console.log('Debug Objects: " . $request->newMessage . "' );</script>";
-        //$newMessage = Messages::create($request->newMessage);
-
-        //return response()->json("Response");
-
-        // $resource = new MessagesResource($newMessage);
-        // return $resource;
-
+        // Get Login user
         $user = Auth::user();
 
+        // Persist message data to database
         $message = $user->messages()->create([
             'message' => $request->newMessage
-          ]);
+        ]);
 
-          // Rerender Chat component to display newly added message
-          return Redirect::route('messages.index');
+        // Update other users with newly added message
+        broadcast(new MessageSent($user, $message))->toOthers();
+
+        // Re-render Chat component to display newly added message
+        return Redirect::route('messages.index');
     }
 
     /**
