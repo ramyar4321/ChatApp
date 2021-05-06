@@ -120,10 +120,6 @@
             BreezeResponsiveNavLink,
         },
 
-        props: {
-            board: Object,
-        },
-
         data() {
             return {
                 showingNavigationDropdown: false,
