@@ -7,7 +7,7 @@
     </template>
 
     <!-- Chat App container -->
-    <div class="md:flex md:justify-center" id="chat">
+    <div class="sm max-w-full md:flex md:justify-center" id="chat">
       <div class="md:w-1/3">
         <chat-header></chat-header>
         <chat-messages :messages="messages"></chat-messages>

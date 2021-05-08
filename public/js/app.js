@@ -19754,7 +19754,7 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 );
 
 var _hoisted_2 = {
-  "class": "md:flex md:justify-center",
+  "class": "sm max-w-full md:flex md:justify-center",
   id: "chat"
 };
 var _hoisted_3 = {
