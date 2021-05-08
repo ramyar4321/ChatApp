@@ -1,13 +1,16 @@
 <template>
-  <div class="chatbox">
+  <div id="chat-content">
     <ul class="chatlist">
       <li v-for="message in messages" :key="message.id">
-        <div class="chat-message">
-          <div class="chat-details">
-            {{ message.user.name }} {{  message.created_at }}
+        <div class="clearfix">
+          <div class="bg-gray-300 w-3/4 mx-4 my-2 p-2 rounded-lg">
+            <div class="flex justify-between" id="chat-details">
+            <div id="chat-name">{{ message.user.name }} </div>
+            <div id="chat-date">{{  message.created_at }}</div>
           </div>
-          <div class="chat-text">
+          <div id="chat-text">
             {{ message.message }}
+          </div>
           </div>
         </div>
       </li>
@@ -16,7 +19,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     /**
@@ -51,11 +53,9 @@ export default {
 
 
 <style scoped>
-.chatbox {
+#chat-content {
   overflow-y: scroll;
-  height: 600px;
-  width: 600px;
-  background-color: green;
+  height: 500px;
 }
 
 /* width */
@@ -73,12 +73,5 @@ export default {
 ::-webkit-scrollbar-thumb {
   background: red;
   border-radius: 10px;
-}
-
-.chat-message {
-  width: 50%;
-  border: 1px solid #000;
-  text-align: left;
-  background-color: white;
 }
 </style>

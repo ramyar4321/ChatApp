@@ -6,15 +6,20 @@
       </h2>
     </template>
 
-    <div class="chat-container">
-      <chat-messages :messages="messages"></chat-messages>
-      <chat-form></chat-form>
+    <!-- Chat App container -->
+    <div class="md:flex md:justify-center" id="chat">
+      <div class="md:w-1/3">
+        <chat-header></chat-header>
+        <chat-messages :messages="messages"></chat-messages>
+        <chat-form></chat-form>
+      </div>
     </div>
   </breeze-authenticated-layout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
+import ChatHeader from "@/Components/ChatHeader.vue";
 import ChatMessages from "@/Components/ChatMessages.vue";
 import ChatForm from "@/Components/ChatForm.vue";
 
@@ -23,6 +28,7 @@ import ChatForm from "@/Components/ChatForm.vue";
  */
 export default {
   components: {
+    ChatHeader,
     ChatMessages,
     ChatForm,
     BreezeAuthenticatedLayout,
@@ -44,18 +50,3 @@ export default {
   },
 };
 </script>
-
-
-<style scoped>
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 100vh;
-  margin-left: 25%;
-  margin-right: 25%;
-  background-color: grey;
-}
-</style>
