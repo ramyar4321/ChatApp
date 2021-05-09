@@ -4,6 +4,12 @@ This is a chat application. It allows users to register an account and login. Cu
 chat room common for all users.  I made this project in order to get familiar with [Laravel](https://laravel.com/) and
 [VueJS](https://vuejs.org/).
 
+## Demo
+
+Here is a short demo of the project showcasing its features. 
+
+[![Demo](https://img.youtube.com/vi/ZrwU_uSdeG4/hqdefault.jpg)](https://youtu.be/ZrwU_uSdeG4)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
